@@ -38,12 +38,12 @@ import android.view.MenuItem;
 public class MainActivity extends AppCompatActivity implements
         LoaderManager.LoaderCallbacks<Cursor> {
 
-    private static String LOG_TAG = MainActivity.class.getSimpleName();
-    private static final int LOADER_ID_MESSAGES = 0;
+    private static       String LOG_TAG            = MainActivity.class.getSimpleName();
+    private static final int    LOADER_ID_MESSAGES = 0;
 
-    RecyclerView mRecyclerView;
+    RecyclerView        mRecyclerView;
     LinearLayoutManager mLayoutManager;
-    SquawkAdapter mAdapter;
+    SquawkAdapter       mAdapter;
 
     static final String[] MESSAGES_PROJECTION = {
             SquawkContract.COLUMN_AUTHOR,
@@ -52,9 +52,9 @@ public class MainActivity extends AppCompatActivity implements
             SquawkContract.COLUMN_AUTHOR_KEY
     };
 
-    static final int COL_NUM_AUTHOR = 0;
-    static final int COL_NUM_MESSAGE = 1;
-    static final int COL_NUM_DATE = 2;
+    static final int COL_NUM_AUTHOR     = 0;
+    static final int COL_NUM_MESSAGE    = 1;
+    static final int COL_NUM_DATE       = 2;
     static final int COL_NUM_AUTHOR_KEY = 3;
 
 
@@ -85,6 +85,15 @@ public class MainActivity extends AppCompatActivity implements
 
         // Start the loader
         getSupportLoaderManager().initLoader(LOADER_ID_MESSAGES, null, this);
+
+        // Gets the extra data from the intent that started the activity. For notification messages, this will contain key value pairs stored in the data
+        // section of the message.
+        Bundle extras = getIntent().getExtras();
+        // Checks if the extras exist and if the key "test" from our FCM message is in the intent
+        if (extras != null && extras.containsKey("test")) {
+            // If the key is there, print out the value of "test"
+            Log.d(LOG_TAG, "Contains: " + extras.getString("test"));
+        }
 
     }
 
